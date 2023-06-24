@@ -1,79 +1,70 @@
-#縦確認定義
 import sys
 
-
-def checkVertical(bingo):
-  for i in range(len(bingo)):
+#縦確認定義
+def check_vertical(bingo_size, bingo):
+  for i in range(bingo_size):
+    #確認するラインの要素をリストに入れる
     checklist = []
     for row in bingo:
       checklist.append(row[i])
-      if isAllequal(checklist):
-        return True
-  return false
 
-#リストに入れる→リスト内が全部丸か確認
-
-#横確認定義
-def checkHorizontal(bingo):
-  for row in bingo:
-    if isAllequal(row):
+    #ビンゴか確認
+    if is_bingo(checklist):
       return True
   return False
 
-#対角線確認定義1
-def checkDiagonal(bingo):
-  for i in range(len(bingo)):
-    checklist = []
-    for row in bingo:
-      checklist.append(row[i])
-      i += 1
-    if isAllequal(checklist):
-      return True
-  return false
 
-#対角線確認定義2
-def checkDiagonal(bingo):
-  for i in reversed(range(len(bingo))):
-    checklist = []
-    for row in bingo:
-      checklist.append(row[i])
-      i -= 1
-    if isAllequal(checklist):
+#横確認定義
+def check_horizontal(bingo_size, bingo):
+  for row in bingo:
+    if is_bingo(row):
       return True
-  return false
+  return False
 
+#対角線確認定義
+def check_diagonal(bingo_size, bingo):
+  diag1 = [bingo[i][i] for i in range(bingo_size)]
+  if is_bingo(diag1):
+    return True
+
+  diag2 = [bingo[i][bingo_size - i - 1] for i in range(bingo_size)]
+  if is_bingo(diag2):
+    return True
+  
+  return False
 
 #リスト内が全部丸か確認
-def isAllequal(list):
+def is_bingo(list):
   for elem in list:
-    if elem !== "◯"
-      return false
+    if elem != 'o':
+      return False
   return True
 
-#ビンゴゲーム枠組み
 def main(lines):
-  # N * N マスのビンゴを考える
-  # N = int(lines[0]) 
+  bingo_size = int(lines[0])
   bingo = lines[1:]
 
   #縦を確認する
-  if checkVertical(bingo):
+  if check_vertical(bingo_size, bingo):
     print("yes")
     return
+
   #横を確認する
-  if checkHorizontal(bingo):
-    print("yes")
-    return
+  if check_horizontal(bingo_size, bingo):
+      print("yes")
+      return
+
   #斜めを確認する
-  if checkDiagonal(bingo):
-    print("yes")
-    return
+  if check_diagonal(bingo_size, bingo):
+      print("yes")
+      return
 
   print("no")
 
 
 if __name__ == '__main__':
-  lines = []
-  for l in sys.stdin:
-    lines.append(l.rstrip('\r\n'))
-  main(lines)
+    lines = []
+    for l in sys.stdin:
+      lines.append(l.rstrip('\r\n'))
+    main(lines)
+
