@@ -23,11 +23,15 @@ def check_horizontal(bingo_size, bingo):
 
 #対角線確認定義
 def check_diagonal(bingo_size, bingo):
-  diag1 = [bingo[i][i] for i in range(bingo_size)]
+  diag1 = []
+  for i in range(bingo_size):
+    diag1.append(bingo[i][i])
   if is_bingo(diag1):
     return True
 
-  diag2 = [bingo[i][bingo_size - i - 1] for i in range(bingo_size)]
+  diag2 = []
+  for i in range(bingo_size):
+    diag2.append(bingo[i][bingo_size - i - 1])
   if is_bingo(diag2):
     return True
   
